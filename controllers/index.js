@@ -110,8 +110,8 @@ const updateComment = (req, res) => {
 
 const deleteComment = async (req, res) => {
   try {
-    const { id } = req.body;
-    const deleted = await Comment.findByIdAndDelete(id)
+    const { _id } = req.body;
+    const deleted = await Comment.findByIdAndDelete(_id)
     if (deleted) {
       return res.status(200).send('Item deleted');
     }
