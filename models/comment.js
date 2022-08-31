@@ -4,7 +4,7 @@ const Schema = mongoose.Schema
 const Comment = new Schema (
     {
         comment: {type: String, required: true},
-        blog_id: {type: String, required: true}
+        blog: {type: String, required: true}
     },
     {timestamps:true},
 )
