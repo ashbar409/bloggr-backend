@@ -94,11 +94,11 @@ const getCommentByBlog = async (req, res) => {
 const updateComment = (req, res) => {
   try {
     const { id } = req.params;
-    Comment.findByIdAndUpdate(id, req.body, { new: true }, (err, comment) => {
+    const comment = Comment.findByIdAndUpdate(id, req.body, { new: true }, (err, comment) => {
       if (err) {
         res.status(500).send(err);
       }
-      if (!blog) {
+      if (!comment) {
         res.status(500).send('Item not found!');
       }
       return res.status(200).json(comment);
