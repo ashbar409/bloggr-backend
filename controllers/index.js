@@ -1,4 +1,5 @@
 const Blog = require('../models/blog');
+const Comment = require("../models/comment")
 
 const createBlog = async (req, res) => {
   try {
@@ -65,6 +66,62 @@ const deleteBlog = async (req, res) => {
 }
 }
 
+const createComment = async (req, res) => {
+  try {
+    const {blog_id} = req.params
+    const comment = await new Comment(req.body)
+    await comment.save()
+    return res.status(201).json({
+      comment,
+    })
+  } catch (error) {
+    return res.status(500).json({error: error.message})
+  }
+}
+
+const getCommentByBlog = async (req, res) => {
+  try {
+    const { blog_id } = req.params;
+    const comments = await Comment.find({blog_id: id})
+    if (comments) {
+      return res.status(200).json({ comments } );
+    }
+    return res.status(404).send('Comments with the specified blog do not exist')
+
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+}
+
+const updateComment = (req, res) => {
+  try {
+    const { id } = req.params;
+    Comment.findByIdAndUpdate(id, req.body, { new: true }, (err, comment) => {
+      if (err) {
+        res.status(500).send(err);
+      }
+      if (!blog) {
+        res.status(500).send('Item not found!');
+      }
+      return res.status(200).json(comment);
+    })
+  } catch (error) {
+    return res.status(500).send(error.message);
+  }
+}
+
+const deleteComment = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const deleted = await Comment.findByIdAndDelete(id)
+    if (deleted) {
+      return res.status(200).send('Item deleted');
+    }
+    throw new Error("Item not found");
+  } catch (error) {
+    return res.status(500).send(error.message);
+}
+}
 
 module.exports = {
   createBlog,
@@ -72,4 +129,8 @@ module.exports = {
   getBlogById,
   updateBlog,
   deleteBlog,
+  createComment,
+  getCommentByBlog,
+  updateComment,
+  deleteComment,
 }
