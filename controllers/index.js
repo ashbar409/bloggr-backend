@@ -68,7 +68,6 @@ const deleteBlog = async (req, res) => {
 
 const createComment = async (req, res) => {
   try {
-    const {blog_id} = req.params
     const comment = await new Comment(req.body)
     await comment.save()
     return res.status(201).json({
@@ -81,8 +80,7 @@ const createComment = async (req, res) => {
 
 const getCommentByBlog = async (req, res) => {
   try {
-    const { id } = req.params;
-    const comments = await Comment.find({/*blog_id: id*/})
+    const comments = await Comment.find(req.body)
     if (comments) {
       return res.status(200).json({ comments } );
     }
