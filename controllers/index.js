@@ -81,7 +81,7 @@ const createComment = async (req, res) => {
 
 const getCommentByBlog = async (req, res) => {
   try {
-    const { blog_id } = req.params;
+    const { id } = req.params;
     const comments = await Comment.find({blog_id: id})
     if (comments) {
       return res.status(200).json({ comments } );
